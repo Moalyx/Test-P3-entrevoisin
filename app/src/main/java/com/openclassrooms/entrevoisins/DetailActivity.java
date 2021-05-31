@@ -5,17 +5,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.AddNeighbourActivity;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
 
 import java.util.List;
 
@@ -23,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {
-
 
 
     @BindView(R.id.name_image_detail)
@@ -42,13 +40,11 @@ public class DetailActivity extends AppCompatActivity {
     TextView hobbyDetail;
     @BindView(R.id.faButton)
     FloatingActionButton faButton;
-    @BindView(R.id.faReturnButton)
-    FloatingActionButton faReturnButton;
+    @BindView(R.id.returnButton)
+    ImageButton returnButton;
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> favoriteNeighbours;
-
-
+    Neighbour neighbour;
 
 
     @Override
@@ -57,12 +53,15 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
         getIncomingIntent();
+        mApiService = DI.getNeighbourApiService();
 
-        faReturnButton.setOnClickListener(new View.OnClickListener() {
+
+        returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this , ListNeighbourActivity.class );
+                Intent intent = new Intent(DetailActivity.this, ListNeighbourActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -70,33 +69,40 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (neighbour.isFavorite() == false) {
+                    neighbour.setFavorite(true);
+                    faButton.setImageResource(R.drawable.ic_baseline_star_24);
+                    Toast.makeText(DetailActivity.this, "Added on favorite", Toast.LENGTH_SHORT).show();
+                    mApiService.addFavoriteNeighbour(neighbour);
 
-
+                } else {
+                    faButton.setImageResource(R.drawable.ic_baseline_star_24_grey);
+                    Toast.makeText(DetailActivity.this, "Delete from favorite", Toast.LENGTH_SHORT).show();
+                    mApiService.deleteFavoriteNeighbour(neighbour);
+                }
 
             }
         });
     }
 
 
-
     private void getIncomingIntent() {
         if (getIntent().hasExtra("neighbour")) {
-            Neighbour neighbour = getIntent().getParcelableExtra("neighbour");
-            setImage(neighbour.getAvatarUrl());
+            neighbour = getIntent().getParcelableExtra("neighbour");
             nameDetail.setText(neighbour.getName());
             adressDetail.setText(neighbour.getAddress());
             numberDetail.setText(neighbour.getPhoneNumber());
             hobbyDetail.setText(neighbour.getAboutMe());
             fbdetail.setText("www.facebook.fr/" + neighbour.getName());
             nameImageDetail.setText(neighbour.getName());
+            Glide.with(this)
+                    .load(neighbour.getAvatarUrl())
+                    .into(imageViewDetail);
         }
     }
 
-    private void setImage(String image) {
-        Glide.with(this)
-                .load(image)
-                .into(imageViewDetail);
-    }
-
-
 }
+
+
+
+

@@ -3,7 +3,11 @@ package com.openclassrooms.entrevoisins.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
+
 import java.util.Objects;
+
+import static com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
 
 /**
  * Model object representing a Neighbour
@@ -28,6 +32,8 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
+    private boolean isFavorite;
+
     /**
      * Constructor
      * @param id
@@ -42,6 +48,7 @@ public class Neighbour implements Parcelable {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        this.isFavorite = isFavorite;
     }
 
     protected Neighbour(Parcel in) {
@@ -51,6 +58,7 @@ public class Neighbour implements Parcelable {
         address = in.readString();
         phoneNumber = in.readString();
         aboutMe = in.readString();
+        isFavorite = in.readByte() != 0;
     }
 
     public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
@@ -64,6 +72,22 @@ public class Neighbour implements Parcelable {
             return new Neighbour[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(avatarUrl);
+        dest.writeString(address);
+        dest.writeString(phoneNumber);
+        dest.writeString(aboutMe);
+        dest.writeByte((byte) (isFavorite ? 1 : 0));
+    }
 
     public long getId() {
         return id;
@@ -113,31 +137,21 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Neighbour neighbour = (Neighbour) o;
-        return Objects.equals(id, neighbour.id);
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(name);
-        dest.writeString(avatarUrl);
-        dest.writeString(address);
-        dest.writeString(phoneNumber);
-        dest.writeString(aboutMe);
+    public Neighbour(long id, String name, String avatarUrl, String address, String phoneNumber, String aboutMe, boolean isFavorite) {
+        this.id = id;
+        this.name = name;
+        this.avatarUrl = avatarUrl;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.aboutMe = aboutMe;
+        this.isFavorite = isFavorite;
     }
 }

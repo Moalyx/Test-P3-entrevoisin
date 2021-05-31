@@ -7,33 +7,36 @@
     android:layout_height="match_parent"
     android:background="#EBEFF0"
     tools:context=".DetailActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+
+    >
 
    <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
 
-       <android.support.design.widget.FloatingActionButton
-           android:id="@+id/faReturnButton"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:clickable="true"
-           android:src="@drawable/ic_baseline_arrow_back_24"
-           app:backgroundTint="@android:color/transparent"
-           app:rippleColor="@null"
-           android:layout_marginLeft="50dp"
-           android:background="@null"/>
+       <ImageButton
+           android:id="@+id/returnButton"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:layout_marginLeft="20dp"
+           android:layout_marginTop="20dp"
+           android:elevation="1dp"
+           android:background="@drawable/ic_baseline_arrow_back_24"
+           />
 
        <ImageView
-        android:id="@+id/imageViewDetail"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        tools:src="@tools:sample/avatars" />
+            android:id="@+id/imageViewDetail"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
 
        <TextView
            android:id="@+id/name_image_detail"
            android:layout_width="wrap_content"
-           android:layout_marginLeft="50dp"
+           android:layout_marginLeft="20dp"
            android:layout_marginTop="220dp"
            android:textSize="40sp"
            android:textColor="#FFFFFF"
@@ -50,7 +53,8 @@
            app:backgroundTint="#FFFFFF"
            android:clickable="true"
            android:layout_marginRight="20dp"
-           android:src="@drawable/ic_baseline_star_24" />
+           android:src="@drawable/fa_button_color"
+           />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -74,6 +78,13 @@
                 android:text="TextView"
                 android:textSize="30dp"
                 android:textColor="#000000"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="55dp"
+                android:background="#F6F6F6"/>
+
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -154,17 +165,24 @@
                 android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="A propos de moi" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#F6F6F6"/>
 
             <TextView
                 android:id="@+id/hobbyDetail"
-                android:textSize="15dp"
+                android:textSize="13dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="TextView" />
+                android:text="TextView"/>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

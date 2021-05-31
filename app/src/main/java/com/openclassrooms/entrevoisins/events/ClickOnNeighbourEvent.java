@@ -10,10 +10,9 @@ public class ClickOnNeighbourEvent {
 
     public Neighbour neighbour;
 
-    public ClickOnNeighbourEvent(Neighbour neighbour, View view){
-        Intent intent = new Intent(view.getContext(), DetailActivity.class);
-        intent.putExtra("neighbour", neighbour);
-        view.getContext().startActivity(intent);
+
+    public ClickOnNeighbourEvent(Neighbour neighbour) {
+        this.neighbour = neighbour;
 
     }
 
