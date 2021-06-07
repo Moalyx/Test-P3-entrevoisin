@@ -29,7 +29,6 @@ import java.util.List;
 public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
     //final MediaPlayer mp = MediaPlayer.create(this.getContext(), R.raw.son_fa_2);
@@ -68,8 +67,8 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, false));
+        List<Neighbour> neighbours = mApiService.getNeighbours();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
     }
 
     @Override
@@ -113,11 +112,11 @@ public class NeighbourFragment extends Fragment {
         startActivity(intent);
     }
 
-    @Subscribe
-    public void onDeleteFavoriteNeighbour(DeleteFavoriteNeighbour event) {
-        mApiService.deleteFavoriteNeighbour(event.neighbour);
-        initList();
-    }
+//    @Subscribe
+//    public void onDeleteFavoriteNeighbour(DeleteFavoriteNeighbour event) {
+//        mApiService.deleteFavoriteNeighbour(event.neighbour);
+//        initList();
+//    }
 
 
 }

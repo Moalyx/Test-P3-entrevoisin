@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.openclassrooms.entrevoisins.DetailActivity;
 import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
 
 import java.util.Objects;
@@ -14,28 +15,41 @@ import static com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator.DU
  */
 public class Neighbour implements Parcelable {
 
-    /** Identifier */
+    /**
+     * Identifier
+     */
     private long id;
 
-    /** Full name */
+    /**
+     * Full name
+     */
     private String name;
 
-    /** Avatar */
+    /**
+     * Avatar
+     */
     private String avatarUrl;
 
-    /** Adress */
+    /**
+     * Adress
+     */
     private String address;
 
-    /** Phone number */
+    /**
+     * Phone number
+     */
     private String phoneNumber;
 
-    /** About me */
+    /**
+     * About me
+     */
     private String aboutMe;
 
     private boolean isFavorite;
 
     /**
      * Constructor
+     *
      * @param id
      * @param name
      * @param avatarUrl
@@ -153,5 +167,19 @@ public class Neighbour implements Parcelable {
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
         this.isFavorite = isFavorite;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Neighbour neighbour = (Neighbour) o;
+        return Objects.equals(id, neighbour.id);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

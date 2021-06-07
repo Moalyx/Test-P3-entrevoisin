@@ -6,6 +6,7 @@ public class DeleteFavoriteNeighbour {
 
     public Neighbour neighbour;
 
+
     /**
      * Constructor.
      * @param neighbour

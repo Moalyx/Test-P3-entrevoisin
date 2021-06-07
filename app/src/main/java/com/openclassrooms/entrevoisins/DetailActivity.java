@@ -1,6 +1,5 @@
 package com.openclassrooms.entrevoisins;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,28 +13,24 @@ import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {
 
-
     @BindView(R.id.name_image_detail)
     TextView nameImageDetail;
     @BindView(R.id.imageViewDetail)
     ImageView imageViewDetail;
-    @BindView(R.id.namedetail)
+    @BindView(R.id.nameDetailTextView)
     TextView nameDetail;
-    @BindView(R.id.adressDetail)
+    @BindView(R.id.addressDetailTextView)
     TextView adressDetail;
-    @BindView(R.id.numberDetail)
+    @BindView(R.id.numberDetailTextView)
     TextView numberDetail;
-    @BindView(R.id.fbDetail)
-    TextView fbdetail;
+    @BindView(R.id.fbDetailTextView)
+    TextView fbDetail;
     @BindView(R.id.hobbyDetail)
     TextView hobbyDetail;
     @BindView(R.id.faButton)
@@ -44,8 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     ImageButton returnButton;
 
     private NeighbourApiService mApiService;
-    Neighbour neighbour;
-
+    private Neighbour neighbour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,32 +49,18 @@ public class DetailActivity extends AppCompatActivity {
         getIncomingIntent();
         mApiService = DI.getNeighbourApiService();
 
-
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, ListNeighbourActivity.class);
-                startActivity(intent);
-
+                finish();
             }
         });
 
         faButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (neighbour.isFavorite() == false) {
-                    neighbour.setFavorite(true);
-                    faButton.setImageResource(R.drawable.ic_baseline_star_24);
-                    Toast.makeText(DetailActivity.this, "Added on favorite", Toast.LENGTH_SHORT).show();
-                    mApiService.addFavoriteNeighbour(neighbour);
-
-                } else {
-                    faButton.setImageResource(R.drawable.ic_baseline_star_24_grey);
-                    Toast.makeText(DetailActivity.this, "Delete from favorite", Toast.LENGTH_SHORT).show();
-                    mApiService.deleteFavoriteNeighbour(neighbour);
-                }
-
+//                noDuplicateNeighbourInList();
+                handleNeighbour();
             }
         });
     }
@@ -93,11 +73,32 @@ public class DetailActivity extends AppCompatActivity {
             adressDetail.setText(neighbour.getAddress());
             numberDetail.setText(neighbour.getPhoneNumber());
             hobbyDetail.setText(neighbour.getAboutMe());
-            fbdetail.setText("www.facebook.fr/" + neighbour.getName());
+            fbDetail.setText("www.facebook.fr/" + neighbour.getName());
             nameImageDetail.setText(neighbour.getName());
             Glide.with(this)
                     .load(neighbour.getAvatarUrl())
                     .into(imageViewDetail);
+            if (neighbour.isFavorite()) {
+                faButton.setImageResource(R.drawable.ic_baseline_star_24);
+            } else {
+                faButton.setImageResource(R.drawable.ic_baseline_star_24_grey);
+            }
+        }
+    }
+
+    private void handleNeighbour() {
+        if (!neighbour.isFavorite()) {
+            neighbour.setFavorite(true);
+            faButton.setImageResource(R.drawable.ic_baseline_star_24);
+            Toast.makeText(DetailActivity.this, "Added on favorite", Toast.LENGTH_SHORT).show();
+            mApiService.addFavoriteNeighbour(neighbour);
+
+
+        } else {
+            neighbour.setFavorite(false);
+            faButton.setImageResource(R.drawable.ic_baseline_star_24_grey);
+            Toast.makeText(DetailActivity.this, "Delete from favorite", Toast.LENGTH_SHORT).show();
+            mApiService.deleteFavoriteNeighbour(neighbour);
         }
     }
 

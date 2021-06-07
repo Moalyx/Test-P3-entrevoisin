@@ -12,13 +12,21 @@ public interface NeighbourApiService {
 
     /**
      * Get all my Neighbours
+     *
      * @return {@link List}
      */
     List<Neighbour> getNeighbours();
-    List<Neighbour> getEmptyNeighbours();
+
+    /**
+     * Get all my favorites
+     *
+     * @return {@link List}
+     */
+    List<Neighbour> getFavorites();
 
     /**
      * Deletes a neighbour
+     *
      * @param neighbour
      */
     void deleteNeighbour(Neighbour neighbour);
@@ -27,13 +35,10 @@ public interface NeighbourApiService {
 
     /**
      * Create a neighbour
+     *
      * @param neighbour
      */
     void createNeighbour(Neighbour neighbour);
 
     void addFavoriteNeighbour(Neighbour neighbour);
-
-    void addNeighbour (Neighbour neighbour);
-
-
 }

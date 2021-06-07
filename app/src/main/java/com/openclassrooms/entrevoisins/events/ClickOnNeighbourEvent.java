@@ -11,6 +11,7 @@ public class ClickOnNeighbourEvent {
     public Neighbour neighbour;
 
 
+
     public ClickOnNeighbourEvent(Neighbour neighbour) {
         this.neighbour = neighbour;
 

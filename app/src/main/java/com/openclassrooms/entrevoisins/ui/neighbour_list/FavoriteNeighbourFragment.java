@@ -25,10 +25,11 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import butterknife.OnClick;
+
 
 public class FavoriteNeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
     private  boolean isFavorite;
 
@@ -62,8 +63,8 @@ public class FavoriteNeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getEmptyNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, true));
+        List<Neighbour> favoriteNeighbours = mApiService.getFavorites();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(favoriteNeighbours));
     }
 
     @Override
@@ -105,6 +106,11 @@ public class FavoriteNeighbourFragment extends Fragment {
         mApiService.deleteFavoriteNeighbour(event.neighbour);
         initList();
     }
+
+//    @OnClick(R.id.add_neighbour)
+//    void addNeighbour() {
+//        AddNeighbourActivity.navigate(getActivity());
+//    }
 
 
 }

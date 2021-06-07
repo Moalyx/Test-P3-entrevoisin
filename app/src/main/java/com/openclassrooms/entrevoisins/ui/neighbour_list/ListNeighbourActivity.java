@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 
+import com.openclassrooms.entrevoisins.DetailActivity;
 import com.openclassrooms.entrevoisins.R;
 
 import butterknife.BindView;
@@ -43,4 +44,6 @@ public class ListNeighbourActivity extends AppCompatActivity {
     void addNeighbour() {
         AddNeighbourActivity.navigate(this);
     }
+
+
 }
