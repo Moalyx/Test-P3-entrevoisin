@@ -45,6 +45,9 @@ public class Neighbour implements Parcelable {
      */
     private String aboutMe;
 
+    /**
+     * Is favorite
+     */
     private boolean isFavorite;
 
     /**
@@ -62,7 +65,6 @@ public class Neighbour implements Parcelable {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
-        this.isFavorite = isFavorite;
     }
 
     protected Neighbour(Parcel in) {

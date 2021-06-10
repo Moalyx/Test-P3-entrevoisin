@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -30,8 +31,8 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private RecyclerView mRecyclerView;
-
-    //final MediaPlayer mp = MediaPlayer.create(this.getContext(), R.raw.son_fa_2);
+    public static final String fragment = "position";
+    private int position;
 
 
     /**
@@ -39,11 +40,28 @@ public class NeighbourFragment extends Fragment {
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
-        NeighbourFragment fragment = new NeighbourFragment();
-        return fragment;
+    public static NeighbourFragment newInstance(int position) {
 
+        Bundle arguments = new Bundle();
+        arguments.putInt(fragment, position);
+
+        NeighbourFragment fragment = new NeighbourFragment();
+        fragment.setArguments(arguments);
+
+        return fragment;
     }
+
+//        switch (position) {
+//            case 0:
+//                NeighbourFragment fragment1 = new NeighbourFragment();
+//                return fragment1;
+//
+//            case 1:
+//                NeighbourFragment fragment2 = new NeighbourFragment();
+//                return fragment2;
+//            default: return null;
+//        }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,17 +77,24 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        initList();
+        position = getArguments().getInt(fragment);
         return view;
-
     }
 
     /**
      * Init the List of neighbours
      */
     private void initList() {
-        List<Neighbour> neighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
+        if (position == 0) {
+            List<Neighbour> neighbours = mApiService.getNeighbours();
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
+        } else {
+            List<Neighbour> favoriteNeighbours = mApiService.getFavorites();
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(favoriteNeighbours));
+        }
     }
+
 
     @Override
     public void onResume() {
@@ -110,13 +135,17 @@ public class NeighbourFragment extends Fragment {
         Intent intent = new Intent(mRecyclerView.getContext(), DetailActivity.class);
         intent.putExtra("neighbour", event.neighbour);
         startActivity(intent);
+
     }
 
-//    @Subscribe
-//    public void onDeleteFavoriteNeighbour(DeleteFavoriteNeighbour event) {
-//        mApiService.deleteFavoriteNeighbour(event.neighbour);
-//        initList();
-//    }
-
-
+    /**
+     * fired if the user clicks on a neighbour item
+     *
+     * @param event
+     */
+    @Subscribe
+    public void onDeleteFavoriteNeighbour(DeleteFavoriteNeighbour event) {
+        mApiService.deleteFavoriteNeighbour(event.neighbour);
+        initList();
+    }
 }

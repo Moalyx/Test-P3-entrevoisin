@@ -59,7 +59,6 @@ public class DetailActivity extends AppCompatActivity {
         faButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                noDuplicateNeighbourInList();
                 handleNeighbour();
             }
         });
@@ -101,7 +100,6 @@ public class DetailActivity extends AppCompatActivity {
             mApiService.deleteFavoriteNeighbour(neighbour);
         }
     }
-
 }
 
 

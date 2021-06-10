@@ -37,7 +37,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_neighbour, parent, false);
+                .inflate(R.layout.fragment_neighbour_row, parent, false);
         return new ViewHolder(view);
 
     }
