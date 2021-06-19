@@ -3,6 +3,8 @@
     <string name="tab_neighbour_title">My neighbours</string>
     <string name="tab_favorites_title">Favorites</string>
     <string name="activity_new_neighbour">New neighbour</string>
+    <string name="added_favorite">Added on Favorite</string>
+    <string name="delete_favorite">Delete from favorite</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+<!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
 </resources>

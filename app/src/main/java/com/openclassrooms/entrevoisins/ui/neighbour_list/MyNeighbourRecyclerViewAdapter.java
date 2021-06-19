@@ -28,10 +28,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
 
-
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         this.mNeighbours = items;
-
     }
 
     @Override
@@ -39,7 +37,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_neighbour_row, parent, false);
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -63,15 +60,12 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             public void onClick(View v) {
                 if (!neighbour.isFavorite()) {
                     EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-                }
-                else {
+                } else {
                     EventBus.getDefault().post(new DeleteFavoriteNeighbour(neighbour));
                 }
-
             }
         });
     }
-
 
     @Override
     public int getItemCount() {
@@ -88,11 +82,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         @BindView(R.id.fragment_neighbour_row)
         public ConstraintLayout fragment_layout_row;
 
-
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
         }
     }
 }

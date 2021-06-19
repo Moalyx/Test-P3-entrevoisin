@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins;
+package com.openclassrooms.entrevoisins.ui.neighbour_detail;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
@@ -64,7 +65,6 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-
     private void getIncomingIntent() {
         if (getIntent().hasExtra("neighbour")) {
             neighbour = getIntent().getParcelableExtra("neighbour");
@@ -77,6 +77,7 @@ public class DetailActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(neighbour.getAvatarUrl())
                     .into(imageViewDetail);
+
             if (neighbour.isFavorite()) {
                 faButton.setImageResource(R.drawable.ic_baseline_star_24);
             } else {
@@ -89,14 +90,12 @@ public class DetailActivity extends AppCompatActivity {
         if (!neighbour.isFavorite()) {
             neighbour.setFavorite(true);
             faButton.setImageResource(R.drawable.ic_baseline_star_24);
-            Toast.makeText(DetailActivity.this, "Added on favorite", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailActivity.this, R.string.added_favorite, Toast.LENGTH_SHORT).show();
             mApiService.addFavoriteNeighbour(neighbour);
-
-
         } else {
             neighbour.setFavorite(false);
             faButton.setImageResource(R.drawable.ic_baseline_star_24_grey);
-            Toast.makeText(DetailActivity.this, "Delete from favorite", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailActivity.this, R.string.delete_favorite, Toast.LENGTH_SHORT).show();
             mApiService.deleteFavoriteNeighbour(neighbour);
         }
     }

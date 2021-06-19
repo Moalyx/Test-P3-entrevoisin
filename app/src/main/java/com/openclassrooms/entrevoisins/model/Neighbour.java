@@ -3,12 +3,7 @@ package com.openclassrooms.entrevoisins.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.openclassrooms.entrevoisins.DetailActivity;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
-
 import java.util.Objects;
-
-import static com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
 
 /**
  * Model object representing a Neighbour
